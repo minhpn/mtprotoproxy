@@ -13,6 +13,11 @@ USER tgproxy
 
 WORKDIR /home/tgproxy/
 
-COPY --chown=tgproxy mtprotoproxy.py config.py /home/tgproxy/
+COPY --chown=tgproxy mtprotoproxy.py config.py init.sh /home/tgproxy/
 
-CMD ["python3", "mtprotoproxy.py"]
+# Ensure config.py has write permissions and init script is executable
+USER root
+RUN chmod 666 /home/tgproxy/config.py && chmod +x /home/tgproxy/init.sh
+USER tgproxy
+
+CMD ["./init.sh"]
