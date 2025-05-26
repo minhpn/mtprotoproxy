@@ -1,16 +1,20 @@
-version: '2.0'
+version: "2.0"
 services:
   mtprotoproxy:
     build: .
     restart: unless-stopped
     network_mode: "host"
+    container_name: "mtprotoproxy"
     volumes:
-        - ./config.py:/home/tgproxy/config.py
-        - ./mtprotoproxy.py:/home/tgproxy/mtprotoproxy.py
-        - /etc/localtime:/etc/localtime:ro
+      - ./config.py:/home/tgproxy/config.py
+      - ./mtprotoproxy.py:/home/tgproxy/mtprotoproxy.py
+      - ./manage_users.py:/home/tgproxy/manage_users.py
+      - ./monitor.py:/home/tgproxy/monitor.py
+      - ./analyze_logs.py:/home/tgproxy/analyze_logs.py
+      - /etc/localtime:/etc/localtime:ro
     logging:
-        driver: "json-file"
-        options:
-            max-file: "10"
-            max-size: "10m"
+      driver: "json-file"
+      options:
+        max-file: "10"
+        max-size: "10m"
 #    mem_limit: 1024m
